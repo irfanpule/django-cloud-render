@@ -1,0 +1,39 @@
+<div class="page-quiz {{ object.background_color }}">
+        <div class="container">
+
+            <div class="card" style="width: 100%">
+                <div class="card-body">
+                <h5 class="float-left"> <b>Soal 1 dari 10</b> </h5>
+                <button type="button" class="btn btn-danger btn-round btn-lg float-right">
+                    Poin <span class="badge badge-light">10</span>
+                </button>
+                </div>
+            </div>
+
+            <div class="card" style="width: 100%">
+                <div class="card-body">
+                    {{ object.content|safe }}
+                </div>
+            </div>
+
+            <div class="card" style="width: 100%">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg" onclick="getQuestion({{ question_id }})">Banyak Awan</button>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg" onclick="getQuestion({{ question_id }})">Gerak semu </button>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg" onclick="getQuestion({{ question_id }})">Kurangnya </button>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg" onclick="getQuestion({{ question_id }})">Suhu udara</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

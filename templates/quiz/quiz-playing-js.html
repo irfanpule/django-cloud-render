@@ -1,0 +1,44 @@
+<script>
+    $( document ).ready(function() {
+        getQuestion({{ question_id }});
+    });
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+
+    let questionId = null;
+    function getQuestion(id) {
+        if(questionId == 0) {
+            {# redirect kehalaman menang atau kalah#}
+            window.location.replace("/");
+        }
+        console.log(id, "id yang masuk ke fungsi")
+        $.ajax({
+            type: "GET",
+            url: `/quiz/question/${id}/`,
+            success: function (body) {
+                console.log(body);
+                questionId = body.question_id;
+                $('.main').html(body.html);
+            }
+        })
+    }
+
+    $("button").on("click", function (e) {
+        console.log("klik button");
+        getQuestion(questionId);
+    });
+</script>

@@ -1,0 +1,53 @@
+{% extends 'base-template.html' %}
+
+{% load static %}
+{% block content %}
+    <div class="wrapper">
+        <div class="page-header section-dark" style="background-image: url({% static 'assets/img/antoine-barres.jpg' %})">
+    		<div class="content-center" style="z-index:5;">
+    			<div class="container">
+    				<div class="title-brand">
+    					<h1 class="presentation-title">Cloud Quiz</h1>
+    					<div class="fog-low">
+    						<img src="{% static 'assets/img/fog-low.png' %}" alt="">
+    					</div>
+    					<div class="fog-low right">
+    						<img src="{% static 'assets/img/fog-low.png' %}" alt="">
+    					</div>
+    				</div>
+
+    				<h2 class="presentation-subtitle text-center mb-3">Mainkan dan menangkan!</h2>
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <a href="{% url 'missing_object:list' %}" class="btn btn-danger btn-round btn-block">Game Pencarian Gambar</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'quiz:list' %}" class="btn btn-danger btn-round btn-block">Game Quiz</a>
+                        </div>
+                    </div>
+                    
+    			</div>
+    		</div>
+            <div class="moving-clouds" style="background-image: url({% static 'assets/img/clouds.png' %}); ">
+
+            </div>
+    	</div>
+	</div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="#">Tentang</a></li>
+                    </ul>
+                </nav>
+                <div class="credits ml-auto">
+                    <span class="copyright">
+                        © <script>document.write(new Date().getFullYear())</script>, by BMKG
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+{% endblock %}

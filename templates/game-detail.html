@@ -1,0 +1,36 @@
+{% extends 'base-template.html' %}
+{% load static %}
+{% block content %}
+    <div class="wrapper">
+        <div class="page-header {{ object.background_color }}">
+    		<div class="content-center mt-0" style="z-index:5;">
+    			<div class="container">
+                    <nav class="navbar navbar-expand-md navbar-transparent nav-no-padding">
+                        <div class="container">
+                            <a class="navbar-brand" href="{{ object.get_list_url }}"><i class="nc-icon nc-minimal-left" aria-hidden="true"></i>&nbsp;Kembali</a>
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'index' %}"><i class="fa fa-home" aria-hidden="true"></i> Beranda</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+
+    				<div class="title-brand mb-3">
+    					<h1>{{ title }}</h1>
+    				</div>
+
+                    <div class="card" style="width: 100%">
+                        <div class="card-body">
+                            <h3 class="card-title">Instruksi</h3>
+                            <p class="card-text">
+                                {{ object.instruction|safe }}
+                            </p>
+                        </div>
+                    </div>
+                    <a href="{{ object.playing_url }}" id="startQuiz" class="btn btn-white btn-round btn-block btn-lg">START</a>
+    			</div>
+    		</div>
+    	</div>
+	</div>
+{% endblock %}

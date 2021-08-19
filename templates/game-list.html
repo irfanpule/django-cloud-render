@@ -1,0 +1,39 @@
+{% extends 'base-template.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="page-header" style="background-image: url({% static 'assets/img/cloud.jpg' %});">
+    		<div class="content-center mt-0" style="z-index:5;">
+    			<div class="container">
+    				<div class="title-brand">
+                        <nav class="navbar navbar-expand-md navbar-transparent nav-no-padding p-0">
+                            <a class="navbar-brand" href="{% url 'index' %}"><i class="nc-icon nc-minimal-left" aria-hidden="true"></i>&nbsp;Kembali</a>
+                        </nav>
+                        
+    					<h1>{{ title }}</h1>
+    					<div class="fog-low">
+    						<img src="{% static 'assets/img/fog-low.png' %}" alt="">
+    					</div>
+    					<div class="fog-low right">
+    						<img src="{% static 'assets/img/fog-low.png' %}" alt="">
+    					</div>
+    				</div>
+
+    				<h5 class="text-white text-center mb-3 mt-5">Pilih salah satu tema di bawah ini!</h5>
+                    <div class="row list-group m-2">
+                        {% for obj in object_list %}
+                            <a href="{{ obj.get_detail_url }}" class="list-group-item list-group-item-action disabled">{{ obj.title }}</a>
+                        {% empty %}
+                            <a href="#">No game yet.</a>
+                        {% endfor %}
+                    </div>
+                    
+    			</div>
+    		</div>
+            <div class="moving-clouds" style="background-image: url({% static 'assets/img/clouds.png' %}); ">
+
+            </div>
+    	</div>
+	</div>
+{% endblock %}
