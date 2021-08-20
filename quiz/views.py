@@ -59,8 +59,13 @@ def playing(request, pk):
         'question_id': question_list[-1],
         'object': quiz
     }
-    # masukan questin id ke list
+
+    # init beberapa data session
     request.session['question_list'] = question_list
+    request.session['score'] = 0
+    request.session['total_question'] = len(question_list)
+    request.session['current_position'] = 1
+
     return render(request, 'quiz/quiz-no-content.html', context)
 
 
@@ -72,16 +77,45 @@ def ajax_question_detail(request, pk):
     question: Question = get_object_or_404(Question, pk=pk)
     question_list = request.session.get('question_list')
     question_list.pop()
+
+    # update question_list and update current position
     request.session['question_list'] = question_list
+    request.session['current_position'] = request.session['total_question'] - len(question_list)
+
     if not question_list:
         question_id = 0
     else:
         question_id = question_list[-1]
 
     # render html ke string dan masukan dalam response json
-    html = render_to_string('quiz/quiz-only-content.html', {'object': question, 'question_id': question_id})
+    context = {
+        'object': question,
+        'question_id': question_id,
+        'score': request.session['score'],
+        'total_question': request.session['total_question'],
+        'current_position': request.session['current_position']
+    }
+    html = render_to_string('quiz/quiz-only-content.html', context)
     body = {
         'html': html,
         'question_id': question_id
     }
     return JsonResponse(body, status=200)
+
+
+def ajax_get_answer(request, question_id, answer_id):
+    question: Question = get_object_or_404(Question, id=question_id)
+    answer = question.answer_set.filter(id=answer_id, is_correct=True).first()
+
+    if answer:
+        # jika benar tambahkan score
+        request.session['score'] += 10
+        body = {
+            'score': request.session['score']
+        }
+        return JsonResponse(body, status=200)
+
+    body = {
+        'question_id': request.session['score']
+    }
+    return JsonResponse(body, status=400)

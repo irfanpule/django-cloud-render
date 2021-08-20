@@ -3,9 +3,9 @@
 
             <div class="card" style="width: 100%">
                 <div class="card-body">
-                <h5 class="float-left"> <b>Soal 1 dari 10</b> </h5>
+                <h5 class="float-left"> <b>Soal {{ current_position }} dari {{ total_question }}</b> </h5>
                 <button type="button" class="btn btn-danger btn-round btn-lg float-right">
-                    Poin <span class="badge badge-light">10</span>
+                    Poin <span class="badge badge-light">{{ score }}</span>
                 </button>
                 </div>
             </div>
@@ -19,18 +19,12 @@
             <div class="card" style="width: 100%">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg" onclick="getQuestion({{ question_id }})">Banyak Awan</button>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg" onclick="getQuestion({{ question_id }})">Gerak semu </button>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg" onclick="getQuestion({{ question_id }})">Kurangnya </button>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg" onclick="getQuestion({{ question_id }})">Suhu udara</button>
-                        </div>
+                        {% for answer in object.answer_set.all %}
+                            <div class="col-md-6 mb-3">
+                                <button class="btn {{ object.button_color }} btn-round btn-block btn-lg"
+                                        onclick="getAnswer({{ answer.question_id }},{{ answer.id }})">{{ answer.content }}</button>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

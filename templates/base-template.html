@@ -1,4 +1,4 @@
-{% load static %}
+{% load static sweetify %}
 <!doctype html>
 <html lang="en">
 
@@ -31,7 +31,6 @@
 <body>
     {% block content %} {% endblock %}
 </body>
-
 <!-- Core JS Files -->
 <script src="{% static 'assets/js/jquery-3.2.1.js'%}" type="text/javascript"></script>
 <script src="{% static 'assets/js/jquery-ui-1.12.1.custom.min.js' %}" type="text/javascript"></script>
@@ -50,5 +49,9 @@
 
 <!--  Paper Kit Initialization and functons -->
 <script src="{% static 'assets/js/paper-kit.js' %}"></script>
+
+<!-- sweetalert -->
+<script src="{% static 'assets/js/sweetalert2@10.js' %}"></script>
+{% sweetify %}
 {% block extra_js %}{% endblock %}
 </html>

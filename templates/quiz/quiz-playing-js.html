@@ -37,8 +37,39 @@
         })
     }
 
-    $("button").on("click", function (e) {
-        console.log("klik button");
-        getQuestion(questionId);
-    });
+    function getAnswer(Qid, Aid) {
+        $.ajax({
+            type: "GET",
+            url: `/quiz/question/${Qid}/${Aid}`,
+            success: function (body) {
+                console.log(body);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Yes..!',
+                    text: "Jawabanmu Benar.",
+                }).then((result) => {
+                    getQuestion(questionId);
+                });
+            },
+            error: function(xhr, status, error){
+                var errorMessage = xhr.status + ': ' + xhr.statusText
+                if(xhr.status == 400){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ops..!',
+                        text: "Jawabanmu Salah.",
+                        confirmButtonText: `Soal berikutnya`,
+                    }).then((result) => {
+                        getQuestion(questionId);
+                    });
+                } else {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Ops..!',
+                      text: errorMessage,
+                    });
+                }
+            }
+        })
+    }
 </script>
