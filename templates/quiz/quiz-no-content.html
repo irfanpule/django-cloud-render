@@ -1,6 +1,11 @@
 {% extends 'base-template.html' %}
 {% load static %}
 {% block content %}
+
+    <audio id="soundGame">
+        <source src="{% static 'assets/sound/Sunny.mp3' %}" type="audio/mpeg">
+    </audio>
+
     <div class="main">
         <div class="page-header {{ object.background_color }}">
             <div class="container">
@@ -40,6 +45,7 @@
             </div>
         </div>
     </div>
+    <button class="btn bg-dark float" id="btnTogglePlay" onclick="togglePlay()">Play/Pause</button>
 {% endblock %}
 
 {% block extra_js %}

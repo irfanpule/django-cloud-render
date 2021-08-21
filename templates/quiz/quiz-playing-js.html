@@ -1,5 +1,6 @@
 <script>
     $( document ).ready(function() {
+        togglePlay();
         getQuestion({{ question_id }});
     });
 
@@ -23,7 +24,7 @@
     function getQuestion(id) {
         if(questionId == 0) {
             {# redirect kehalaman menang atau kalah#}
-            window.location.replace("/");
+            window.location.replace("/quiz/complete/");
         }
         console.log(id, "id yang masuk ke fungsi")
         $.ajax({
@@ -47,6 +48,7 @@
                     icon: 'success',
                     title: 'Yes..!',
                     text: "Jawabanmu Benar.",
+                    confirmButtonText: `Soal berikutnya`,
                 }).then((result) => {
                     getQuestion(questionId);
                 });
@@ -72,4 +74,16 @@
             }
         })
     }
+
+    var myAudio = document.getElementById("soundGame");
+
+    function togglePlay() {
+        console.log("ke klik dong");
+        if(myAudio.paused) {
+            $("#btnTogglePlay").html("<i class='fa fa-volume-off fa-3x m-0'></i>");
+        } else {
+            $("#btnTogglePlay").html("<i class='fa fa-volume-up fa-3x m-0'></i>");
+        }
+        return myAudio.paused ? myAudio.play() : myAudio.pause();
+    };
 </script>
