@@ -9,5 +9,6 @@ urlpatterns = [
     path('<int:pk>/playing/', views.playing, name='playing'),
     path('question/<int:pk>/', views.ajax_question_detail, name='ajax_question_detail'),
     path('question/<int:question_id>/<int:answer_id>', views.ajax_get_answer, name='ajax_get_answer'),
+    path('complete/', views.complete_quiz_preview, name='complete_quiz_preview'),
 ]
 

@@ -1,31 +1,29 @@
-<div class="page-quiz {{ object.background_color }}">
-        <div class="container">
-
-            <div class="card" style="width: 100%">
-                <div class="card-body">
-                <h5 class="float-left"> <b>Soal {{ current_position }} dari {{ total_question }}</b> </h5>
+<div class="page-header {{ object.background_color }}">
+    <div class="container">
+        <div class="card" style="width: 100%">
+            <div class="card-body">
+                <h5 class="float-left"><b>Soal {{ current_position }} dari {{ total_question }}</b></h5>
                 <button type="button" class="btn btn-danger btn-round btn-lg float-right">
                     Poin <span class="badge badge-light">{{ score }}</span>
                 </button>
-                </div>
             </div>
+        </div>
 
-            <div class="card" style="width: 100%">
-                <div class="card-body">
-                    {{ object.content|safe }}
-                </div>
+        <div class="card" style="width: 100%">
+            <div class="card-body text-center">
+                {{ object.content|safe }}
             </div>
+        </div>
 
-            <div class="card" style="width: 100%">
-                <div class="card-body">
-                    <div class="row">
-                        {% for answer in object.answer_set.all %}
-                            <div class="col-md-6 mb-3">
-                                <button class="btn {{ object.button_color }} btn-round btn-block btn-lg"
-                                        onclick="getAnswer({{ answer.question_id }},{{ answer.id }})">{{ answer.content }}</button>
-                            </div>
-                        {% endfor %}
-                    </div>
+        <div class="card" style="width: 100%">
+            <div class="card-body">
+                <div class="row">
+                    {% for answer in object.answer_set.all %}
+                        <div class="col-md-6 mb-3">
+                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg"
+                                    onclick="getAnswer({{ answer.question_id }},{{ answer.id }})">{{ answer.content }}</button>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

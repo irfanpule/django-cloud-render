@@ -119,3 +119,30 @@ def ajax_get_answer(request, question_id, answer_id):
         'question_id': request.session['score']
     }
     return JsonResponse(body, status=400)
+
+
+def complete_quiz_preview(request):
+    score = request.session['score']
+    stars = round(score / (100 / 5))
+    if score >= 70:
+        message = 'Selamat! Kamu calon prakirawan cuaca!!'
+        bg_color = 'bg-success'
+        text_color = 'text-success'
+        is_win = True
+    else:
+        message = 'Maaf! Kamu belum berhasil menjadi prakirawan cuaca!!. Belaja lagi ya'
+        bg_color = 'bg-warning'
+        text_color = 'text-danger'
+        is_win = False
+
+    context = {
+        'title': 'Selesai',
+        'message': message,
+        'score': score,
+        'bg_color': bg_color,
+        'is_win': is_win,
+        'text_color': text_color,
+        'stars_yellow': range(0, stars),
+        'stars_grey': range(0, 5 - stars)
+    }
+    return render(request, 'quiz/complete-quiz.html', context)

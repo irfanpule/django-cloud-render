@@ -1,0 +1,33 @@
+{% extends 'base-template.html' %}
+{% load static %}
+{% block content %}
+    <div class="main">
+        <div class="page-header {{ bg_color }}">
+            <div class="container">
+                <div class="card" style="width: 100%">
+                    <div class="card-body">
+                        <h2 class="text-center"> {% if is_win %} Kamu Menang {% else %} Kamu Kalah {% endif %}</h2>
+                        <div class="text-center mt-3">
+                            {% for star in stars_yellow %}
+                                <i class="fa fa-star fa-4x m-0 text-warning text-center m-0" style="width:auto;"></i>
+                            {% endfor %}
+                            {% for star in stars_grey %}
+                                <i class="fa fa-star fa-4x m-0 text-muted text-center m-0" style="width:auto;"></i>
+                            {% endfor %}
+                        </div>
+                        <h1 class="text-center {{ text_color }}"> Score kamu {{ score }}</h1>
+                        <h2 class="text-center">{{ message }}</h2>
+                    </div>
+                    <div class="card-footer text-center mb-3">
+                        <button class="btn btn-fill btn-round btn-danger btn-lg"><i class="fa fa-repeat fa-3x m-0" style="width:auto;"></i><br>Main lagi</button>
+                        <button class="btn btn-fill btn-round btn-primary btn-lg"><i class="fa fa-home fa-3x m-0" style="width:auto;"></i><br>Beranda</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    {% include 'quiz/quiz-playing-js.html' %}
+{% endblock %}
