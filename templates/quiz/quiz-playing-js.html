@@ -21,10 +21,11 @@
     };
 
     let questionId = null;
+    let quizId = null;
     function getQuestion(id) {
         if(questionId == 0) {
             {# redirect kehalaman menang atau kalah#}
-            window.location.replace("/quiz/complete/");
+            window.location.replace(`/quiz/complete/${quizId}`);
         }
         console.log(id, "id yang masuk ke fungsi")
         $.ajax({
@@ -33,6 +34,7 @@
             success: function (body) {
                 console.log(body);
                 questionId = body.question_id;
+                quizId = body.quiz_id;
                 $('.main').html(body.html);
             }
         })

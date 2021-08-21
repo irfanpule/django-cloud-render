@@ -19,7 +19,7 @@
                         <h2 class="text-center">{{ message }}</h2>
                     </div>
                     <div class="card-footer text-center mb-3">
-                        <button class="btn btn-fill btn-round btn-danger btn-lg"><i class="fa fa-repeat fa-3x m-0" style="width:auto;"></i><br>Main lagi</button>
+                        <a href="{% url 'quiz:detail' quiz.id %}" class="btn btn-fill btn-round btn-danger btn-lg"><i class="fa fa-repeat fa-3x m-0" style="width:auto;"></i><br>Main lagi</a>
                         <a href="{% url 'index' %}" class="btn btn-fill btn-round btn-primary btn-lg"><i class="fa fa-home fa-3x m-0" style="width:auto;"></i><br>Beranda</a>
                     </div>
                 </div>

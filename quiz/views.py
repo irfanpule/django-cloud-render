@@ -61,6 +61,7 @@ def playing(request, pk):
     }
 
     # init beberapa data session
+    request.session['quiz_id'] = quiz.id
     request.session['question_list'] = question_list
     request.session['score'] = 0
     request.session['total_question'] = len(question_list)
@@ -98,7 +99,8 @@ def ajax_question_detail(request, pk):
     html = render_to_string('quiz/quiz-only-content.html', context)
     body = {
         'html': html,
-        'question_id': question_id
+        'question_id': question_id,
+        'quiz_id': request.session['quiz_id'],
     }
     return JsonResponse(body, status=200)
 
@@ -121,7 +123,7 @@ def ajax_get_answer(request, question_id, answer_id):
     return JsonResponse(body, status=400)
 
 
-def complete_quiz_preview(request):
+def complete_quiz(request, quiz_id):
     score = request.session['score']
     stars = round(score / (100 / 5))
     if score >= 70:
@@ -135,6 +137,7 @@ def complete_quiz_preview(request):
         text_color = 'text-danger'
         is_win = False
 
+    quiz = Quiz.objects.filter(id=quiz_id).first()
     context = {
         'title': 'Selesai',
         'message': message,
@@ -143,6 +146,7 @@ def complete_quiz_preview(request):
         'is_win': is_win,
         'text_color': text_color,
         'stars_yellow': range(0, stars),
-        'stars_grey': range(0, 5 - stars)
+        'stars_grey': range(0, 5 - stars),
+        'quiz': quiz
     }
     return render(request, 'quiz/complete-quiz.html', context)
