@@ -22,9 +22,12 @@
 
     let questionId = null;
     let quizId = null;
+    let interval = null;
+    let timer = 10  // ganti nilai timer untuk mengubah durasi bermain pada 1 pertanyaan
+    let duration = timer;
     function getQuestion(id) {
         if(questionId == 0) {
-            {# redirect kehalaman menang atau kalah#}
+            // redirect kehalaman menang atau kalah
             window.location.replace(`/quiz/complete/${quizId}`);
         }
         console.log(id, "id yang masuk ke fungsi")
@@ -32,15 +35,23 @@
             type: "GET",
             url: `/quiz/question/${id}/`,
             success: function (body) {
-                console.log(body);
                 questionId = body.question_id;
                 quizId = body.quiz_id;
                 $('.main').html(body.html);
+
+                // invalidateInterval
+                duration = timer;
+                clearInterval(interval);
+                interval = setInterval(setTimer, 1000);
             }
         })
     }
 
     function getAnswer(Qid, Aid) {
+        // invalidateInterval
+        duration = timer;
+        clearInterval(interval);
+
         $.ajax({
             type: "GET",
             url: `/quiz/question/${Qid}/${Aid}`,
@@ -78,7 +89,6 @@
     }
 
     var myAudio = document.getElementById("soundGame");
-
     function togglePlay() {
         console.log("ke klik dong");
         if(myAudio.paused) {
@@ -88,4 +98,15 @@
         }
         return myAudio.paused ? myAudio.play() : myAudio.pause();
     };
+
+    function setTimer() {
+        display = document.querySelector('#timerCountdown');
+        display.textContent = `Waktu kamu ${duration} detik`;
+        if (duration == 0) {
+            duration = 11;
+            getQuestion(questionId);
+        }
+        --duration;
+    };
+
 </script>
