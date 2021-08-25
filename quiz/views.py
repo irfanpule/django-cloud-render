@@ -125,8 +125,13 @@ def ajax_get_answer(request, question_id, answer_id):
 
 def complete_quiz(request, quiz_id):
     score = request.session['score']
-    stars = round(score / (100 / 5))
-    if score >= 70:
+    max_score = request.session['total_question'] * 10
+    stars = round(score / (max_score / 5))
+
+    # nilai maksimal / 100 * 70.
+    # Jadi untuk lulu nilai harus 70% atau lebih tinggi
+    percentage_to_win = (max_score / 100) * 70
+    if score >= percentage_to_win:
         message = 'Selamat! Kamu calon prakirawan cuaca!!'
         bg_color = 'bg-success'
         text_color = 'text-success'
