@@ -1,5 +1,6 @@
 {% extends 'base-template.html' %}
-{% load static %}
+{% load static quiz_tags %}
+
 {% block content %}
     <div class="main">
         <div class="page-header {{ bg_color }}">
@@ -24,16 +25,20 @@
                     </div>
                 </div>
 
-                <div class="card" style="width: 100%">
-                    <div class="card-body">
-                        <p>untuk munculin jawaban yang benar</p>
+                <hr>
+                <h1>Kunci Jawaban</h1>
+                {% for question in questions %}
+                    <div class="card" style="width: 100%">
+                        <div class="card-body text-center">
+                            <h3 class="text-info">Pertanyaan</h3>
+                             {{ question.content|safe }}
+                            <hr>
+                            <h3 class="text-info">Jawaban benar</h3>
+                            <button class="btn {{ object.button_color }} btn-round btn-lg">{{ question|correct_answer }}</button>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block extra_js %}
-    {% include 'quiz/quiz-playing-js.html' %}
 {% endblock %}

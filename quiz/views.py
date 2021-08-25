@@ -152,6 +152,7 @@ def complete_quiz(request, quiz_id):
         'text_color': text_color,
         'stars_yellow': range(0, stars),
         'stars_grey': range(0, 5 - stars),
-        'quiz': quiz
+        'quiz': quiz,
+        'questions': quiz.question_set.prefetch_related('answer_set')
     }
     return render(request, 'quiz/complete-quiz.html', context)
