@@ -32,6 +32,11 @@ class MissingObject(models.Model):
         url = reverse('missing_object:list')
         return url
 
+    @property
+    def playing_url(self):
+        url = reverse('missing_object:playing', args=[self.pk])
+        return url
+
 
 class ImageObject(models.Model):
     missing_object = models.ForeignKey(

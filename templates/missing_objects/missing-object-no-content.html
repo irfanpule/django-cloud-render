@@ -1,0 +1,20 @@
+{% extends 'base-template.html' %}
+{% load static %}
+{% block content %}
+
+    <audio id="soundGame">
+        <source src="{% static 'assets/sound/Sunny.mp3' %}" type="audio/mpeg">
+    </audio>
+
+    <div class="main">
+        <div class="page-header {{ object.background_color }}" style="background-image: url('assets/img/');">
+        </div>
+    </div>
+    <button class="btn bg-dark float" id="btnTogglePlay" onclick="togglePlay()">Play/Pause</button>
+
+
+{% endblock %}
+
+{% block extra_js %}
+    {% include 'missing_objects/missing-object-playing-js.html' %}
+{% endblock %}

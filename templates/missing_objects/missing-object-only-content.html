@@ -7,9 +7,12 @@
                 <div class="card-body">
                     <ul style="list-style-type:none;margin:0;padding:0;">
                         <li class="float-left"><h5>Lives</h5></li>
-                        <li class="float-left ml-3"><i class="fa fa-heart fa-2x text-danger"></i></li>
-                        <li class="float-left ml-3"><i class="fa fa-heart fa-2x text-danger"></i></li>
-                        <li class="float-left ml-3"><i class="fa fa-heart fa-2x text-default"></i></li>
+                        {% for live in lives %}
+                            <li class="float-left ml-3"><i class="fa fa-heart fa-2x text-danger"></i></li>
+                        {% endfor %}
+                        {% for live in lives_reminder %}
+                            <li class="float-left ml-3"><i class="fa fa-heart fa-2x text-default"></i></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -19,8 +22,10 @@
                     <div class="row">
                         {% for picture in pictures %}
                         <div class="col-6 col-md-3 mb-3">
+                            <a href="#" onclick="getAnswer({{ picture.id }})">
                             <img src="{{ picture.picture }}" class="img-thumbnail img-responsive"
                                  alt="Rounded Image">
+                            </a>
                         </div>
                         {% endfor %}
                     </div>
@@ -32,7 +37,7 @@
                     <div class="row">
                         {% for name in names %}
                         <div class="col-md-6 mb-3">
-                            <a href="#" class="btn btn-primary btn-round btn-block btn-lg">{{ name.name }}</a>
+                            <button class="btn btn-primary btn-round btn-block btn-lg" onclick="getAnswer({{ name.id }})">{{ name.name }}</button>
                         </div>
                         {% endfor %}
                     </div>
