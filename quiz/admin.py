@@ -15,3 +15,4 @@ class QuizAdmin(admin.ModelAdmin):
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
+    list_filter = ['quiz']

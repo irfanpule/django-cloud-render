@@ -41,11 +41,11 @@ class Quiz(models.Model):
 class Question(models.Model):
     quiz = models.ManyToManyField(Quiz, verbose_name=_("Quiz"), blank=True)
     background_color = models.CharField(
-        _("Warna Latar"), max_length=20, choices=utils.BG_COLOR, default=utils.warning,
+        _("Warna Latar"), max_length=20, choices=utils.BG_COLOR, default=utils.BG_COLOR[4][0],
         help_text=_("Warna yang dipilih akan menjadi warna latar pada quiz ini.")
     )
     button_color = models.CharField(
-        _("Warna Tombol"), max_length=20, choices=utils.BTN_COLOR, default=utils.info,
+        _("Warna Tombol"), max_length=20, choices=utils.BTN_COLOR, default=utils.BTN_COLOR[2][0],
         help_text=_("Warna yang dipilih akan menjadi warna tombol pilihan jawaban pada quiz ini.")
     )
     content = RichTextUploadingField(_("Pertanyaan"), help_text=_("Tuliskan pertanyaan disini"))
