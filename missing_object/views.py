@@ -23,3 +23,13 @@ class MissingObjectDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = context['object'].title
         return context
+
+
+class QuestionReviewView(DetailView):
+    model = MissingObject
+    template_name = 'missing_objects/game-missing-object.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Game dimulai"
+        return context

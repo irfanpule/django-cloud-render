@@ -23,3 +23,7 @@ BG_COLOR = (
     ('bg-warning', warning),
     ('bg-danger', danger),
 )
+
+
+def custom_upload_path(prefix='etc'):
+    return f"files/{prefix}/%Y/%m/%d"

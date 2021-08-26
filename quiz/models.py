@@ -19,6 +19,10 @@ class Quiz(models.Model):
         help_text=_("Warna yang dipilih akan menjadi warna latar pada quiz ini.")
     )
 
+    class Meta:
+        verbose_name = _("Quiz")
+        verbose_name_plural = _("Quiz")
+
     def __str__(self):
         return self.title
 
@@ -50,6 +54,10 @@ class Question(models.Model):
     )
     content = RichTextUploadingField(_("Pertanyaan"), help_text=_("Tuliskan pertanyaan disini"))
 
+    class Meta:
+        verbose_name = _("Pertanyaan")
+        verbose_name_plural = _("Pertanyaan")
+
     def __str__(self):
         return self.content
 
@@ -69,6 +77,10 @@ class Answer(models.Model):
         _("Jawaban Benar"), blank=False, default=False,
         help_text=_("Centang jika ini jawaban yang benar.")
     )
+
+    class Meta:
+        verbose_name = _("Jawaban")
+        verbose_name_plural = _("Jawaban")
 
     def __str__(self):
         return self.content

@@ -15,6 +15,10 @@ class MissingObject(models.Model):
         help_text=_("Warna yang dipilih akan menjadi warna latar pada quiz ini.")
     )
 
+    class Meta:
+        verbose_name = _("Pencarian Gambar")
+        verbose_name_plural = _("Pencarian Gambar")
+
     def __str__(self):
         return self.title
 
@@ -27,3 +31,19 @@ class MissingObject(models.Model):
     def get_list_url(self):
         url = reverse('missing_object:list')
         return url
+
+
+class ImageObject(models.Model):
+    missing_object = models.ForeignKey(MissingObject, verbose_name=_("Mencari Obyek"), on_delete=models.CASCADE)
+    name = models.CharField(
+        _("Nama"), max_length=220,
+        help_text=_("Tuliskan nama dari obyek gambar yang diunggah.")
+    )
+    picture = models.ImageField(upload_to=utils.custom_upload_path('pictures'))
+
+    class Meta:
+        verbose_name = _("Obyek Gambar")
+        verbose_name_plural = _("Obyek Gambar")
+
+    def __str__(self):
+        return self.name
