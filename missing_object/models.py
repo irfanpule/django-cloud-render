@@ -34,7 +34,10 @@ class MissingObject(models.Model):
 
 
 class ImageObject(models.Model):
-    missing_object = models.ForeignKey(MissingObject, verbose_name=_("Mencari Obyek"), on_delete=models.CASCADE)
+    missing_object = models.ForeignKey(
+        MissingObject, verbose_name=_("Mencari Obyek"),
+        related_name='imageobjects', on_delete=models.CASCADE
+    )
     name = models.CharField(
         _("Nama"), max_length=220,
         help_text=_("Tuliskan nama dari obyek gambar yang diunggah.")

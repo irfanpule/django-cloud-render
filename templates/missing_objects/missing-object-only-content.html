@@ -17,22 +17,12 @@
             <div class="card" style="width: 100%">
                 <div class="card-body">
                     <div class="row">
+                        {% for picture in pictures %}
                         <div class="col-6 col-md-3 mb-3">
-                            <img src="{% static 'assets/img/faces/clem-onojeghuo-3.jpg' %}" class="img-thumbnail img-responsive"
+                            <img src="{{ picture.picture }}" class="img-thumbnail img-responsive"
                                  alt="Rounded Image">
                         </div>
-                        <div class="col-6 col-md-3 mb-3">
-                            <img src="{% static 'assets/img/faces/clem-onojeghuo-3.jpg' %}" class="img-thumbnail img-responsive"
-                                 alt="Rounded Image">
-                        </div>
-                        <div class="col-6 col-md-3 mb-3">
-                            <img src="{% static 'assets/img/faces/clem-onojeghuo-3.jpg' %}" class="img-thumbnail img-responsive"
-                                 alt="Rounded Image">
-                        </div>
-                        <div class="col-6 col-md-3 mb-3">
-                            <img src="{% static 'assets/img/faces/clem-onojeghuo-3.jpg' %}" class="img-thumbnail img-responsive"
-                                 alt="Rounded Image">
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -40,18 +30,11 @@
             <div class="card" style="width: 100%">
                 <div class="card-body">
                     <div class="row">
+                        {% for name in names %}
                         <div class="col-md-6 mb-3">
-                            <a href="#" class="btn btn-primary btn-round btn-block btn-lg">Obyek A</a>
+                            <a href="#" class="btn btn-primary btn-round btn-block btn-lg">{{ name.name }}</a>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <a href="#" class="btn btn-primary btn-round btn-block btn-lg">Obyek A </a>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <a href="#" class="btn btn-primary btn-round btn-block btn-lg">Obyek A</a>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <a href="#" class="btn btn-primary btn-round btn-block btn-lg">Obyek A</a>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from missing_object.models import MissingObject
+from missing_object.utils import random_picture_missing_obj
 
 
 class MissingObjectListView(ListView):
@@ -32,4 +33,8 @@ class QuestionReviewView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Game dimulai"
+        ids = context['object'].imageobjects.values_list('id', flat=True)
+        pictures, names = random_picture_missing_obj(ids)
+        context['pictures'] = pictures
+        context['names'] = names
         return context
