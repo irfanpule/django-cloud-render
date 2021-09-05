@@ -1,0 +1,41 @@
+{% extends 'base-template.html' %}
+{% load static quiz_tags %}
+
+{% block content %}
+    <div class="main">
+        <div class="pt-5 pb-5 {{ bg_color }}">
+            <div class="container">
+                <div class="card" style="width: 100%">
+                    <div class="card-body">
+                        <h1 class="text-center {{ text_color }}"> {% if is_win %} Kamu Menang {% else %} Kamu Kalah {% endif %}</h1>
+                        <h2 class="text-center">{{ message }}</h2>
+                    </div>
+                    <div class="card-footer text-center mb-3">
+                        <a href="{% url 'missing_object:detail' object.id %}" class="btn btn-fill btn-round btn-danger btn-lg"><i class="fa fa-repeat fa-3x m-0" style="width:auto;"></i><br>Main lagi</a>
+                        <a href="{% url 'index' %}" class="btn btn-fill btn-round btn-primary btn-lg"><i class="fa fa-home fa-3x m-0" style="width:auto;"></i><br>Beranda</a>
+                    </div>
+                </div>
+
+                <hr>
+                <h1>Kunci Jawaban</h1>
+                <div class="row">
+                {% for image in object.imageobjects.all %}
+                    <div class="col-md-6">
+                        <div class="card" style="width: 100%">
+                            <div class="card-body text-center">
+                                <h3 class="text-info">Gambar</h3>
+                                <img src="{{ image.picture.url }}" class="img-thumbnail img-responsive"
+                                     alt="Rounded Image">
+                                </a>
+                                <hr>
+                                <h3 class="text-info">Nama</h3>
+                                <button class="btn {{ object.button_color }} btn-round btn-lg">{{ image.name }}</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

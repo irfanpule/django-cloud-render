@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:pk>/playing/', views.playing, name='playing'),
     path('get-pictures/', views.ajax_get_pictures, name='ajax_get_pictures'),
     path('<int:id>/get-answer/', views.ajax_get_answer, name='ajax_get_answer'),
+    path('complete/', views.complete_missing_object, name='complete_missing_object'),
 ]

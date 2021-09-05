@@ -26,6 +26,9 @@
             url: '/missing-object/get-pictures/',
             success: function (body) {
                 console.log(body);
+                if(body.lives == 0 || body.img_ids == 0) {
+                    window.location.replace(body.url_complete);
+                }
                 $('.main').html(body.html);
             }
         })
