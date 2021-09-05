@@ -21,7 +21,7 @@
                 <div class="row">
                     {% for answer in object.answer_set.all %}
                         <div class="col-md-6 mb-3">
-                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg"
+                            <button class="btn {{ object.button_color }} btn-round btn-block btn-lg btn-wrap-text"
                                     onclick="getAnswer({{ answer.question_id }},{{ answer.id }})">{{ answer.content }}</button>
                         </div>
                     {% endfor %}

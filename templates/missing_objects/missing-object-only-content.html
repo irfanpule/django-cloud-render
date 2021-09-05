@@ -37,7 +37,7 @@
                     <div class="row">
                         {% for name in names %}
                         <div class="col-md-6 mb-3">
-                            <button class="btn btn-primary btn-round btn-block btn-lg" onclick="getAnswer({{ name.id }})">{{ name.name }}</button>
+                            <button class="btn btn-primary btn-round btn-block btn-lg btn-wrap-text" onclick="getAnswer({{ name.id }})">{{ name.name }}</button>
                         </div>
                         {% endfor %}
                     </div>
