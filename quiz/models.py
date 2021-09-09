@@ -3,7 +3,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from cloudgame import utils
-
+from bs4 import BeautifulSoup
 
 class Quiz(models.Model):
     title = models.CharField(_("Judul"), max_length=220)
@@ -64,7 +64,15 @@ class Question(models.Model):
     @property
     def get_preview_url(self):
         url = reverse('quiz:preview', args=[self.pk])
-        return url
+        return str(url)
+
+    @property
+    def plain_content(self):
+        soup = BeautifulSoup(self.content, 'html.parser')
+        p = soup.find_all('p')[-1]
+        if p:
+            return p.string
+        return self.content
 
 
 class Answer(models.Model):
