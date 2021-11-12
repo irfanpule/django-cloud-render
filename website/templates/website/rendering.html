@@ -1,0 +1,66 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class=" col-md-12 col-lg-12 ">
+            <h1>{{ title }}</h1>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Status: <span id="render_status">-</span></div>
+                <div class="panel-body">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" id="render_progress" role="progressbar" aria-valuenow="1"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            <span id="percentage_progress">1%</span>
+                        </div>
+                    </div>
+                    <textarea class="form-control" rows="6" id="log_process"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        var last_line = 0;
+        var log_content = [];
+        var render_state = "";
+        var progress = "1";
+
+        function updateView() {
+            $("#render_status").html(render_state);
+            var log_html = "";
+            for (var i = 0; i < log_content.length; i++) {
+                log_html += log_content[i]
+            }
+
+            if(render_state == 'success'){
+                console.log("berhasil nih")
+            }
+
+            $("#render_progress").css({'width': progress + "%"});
+            $("#log_process").text(log_html);
+            $("#percentage_progress").text(progress + "%");
+        }
+
+        function listenProcess() {
+            $.get("{% url 'api:render_log' project.id %}?from_line=" + last_line, function (data) {
+                render_state = data.rendering.state;
+                log_content = log_content.concat(data.log);
+                last_line = last_line + data.log.length;
+                progress = data.progress
+                console.log(render_state, last_line, progress)
+                console.log(log_content)
+                updateView();
+                if (render_state !== "success") {
+                    setTimeout(listenProcess, 1000);
+                }
+            });
+        }
+
+        $("document").ready(function () {
+            listenProcess()
+        })
+    </script>
+{% endblock %}
