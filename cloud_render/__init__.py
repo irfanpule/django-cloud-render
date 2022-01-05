@@ -3,3 +3,6 @@
 from .celery import app as celery_app
 
 __all__ = ('celery_app',)
+
+# run celery
+# celery -A cloud_render worker -l INFO
