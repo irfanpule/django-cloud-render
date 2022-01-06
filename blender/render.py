@@ -1,7 +1,6 @@
 import subprocess
 import shlex
 import os
-import threading
 
 from django.conf import settings
 from blender.models import Project
