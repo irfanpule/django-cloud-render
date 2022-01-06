@@ -140,3 +140,4 @@ RENDER_LOG_DIR = os.path.join(BASE_DIR, 'render_logs')
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_TIMEZONE = 'Asia/Jakarta'
+CELERY_RESULT_BACKEND = 'django-db'
