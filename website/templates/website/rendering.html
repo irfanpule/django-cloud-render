@@ -42,6 +42,7 @@
             $("#render_progress").css({'width': progress + "%"});
             $("#log_process").text(log_html);
             $("#percentage_progress").text(progress + "%");
+            $("#log_process").scrollTop($('#log_process')[0].scrollHeight);
         }
 
         function listenProcess() {
