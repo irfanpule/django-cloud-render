@@ -11,9 +11,14 @@ class BlenderRender:
     log_dir = settings.RENDER_LOG_DIR
     output_dir = settings.BASE_DIR + "/output_render/frame_result"
 
-    def __init__(self, project: Project) -> None:
+    def __init__(self, project: Project, start_frame: int = 0, end_frame: int = 0,
+                 option_cycles: str = "CPU", total_thread: int = 2) -> None:
         self.project = project
         self.filepath = project.file.path
+        self.start_frame = start_frame
+        self.end_frame = end_frame
+        self.option_cycles = option_cycles
+        self.total_thread = total_thread
 
     def _prepare_log_dir(self):
         """
@@ -21,6 +26,8 @@ class BlenderRender:
         """
         if not os.path.exists(self.log_dir):
             os.mkdir(self.log_dir)
+        if os.path.exists(self._log_file_path()):
+            os.remove(self._log_file_path())
 
     def _log_file_path(self) -> str:
         """
@@ -62,7 +69,7 @@ class BlenderRender:
             self.project.state = Project.FAILED
             self.project.save()
 
-    def run(self, start_frame: int, end_frame: int, option_cycles: str = "CPU", total_thread: int = 2):
+    def run(self):
         """
         to start process rendering
         :param start_frame: number of start frame
@@ -76,11 +83,9 @@ class BlenderRender:
         self.project.save()
 
         args = shlex.split(
-            f"blender -b {self.filepath} -o {self.output_dir} -s {start_frame} -e {end_frame} -t {total_thread} -a -- --cycles-device {option_cycles}")
+            f"blender -b {self.filepath} -o {self.output_dir} -s {self.start_frame} -e {self.end_frame} -t {self.total_thread} -a -- --cycles-device {self.option_cycles}")
         proc_render = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        t = threading.Thread(target=self._output_reader, args=(proc_render,))
-        t.start()
-        return t
+        self._output_reader(proc_render)
 
     def get_log(self, from_line=0):
         """
@@ -97,6 +102,15 @@ class BlenderRender:
             return lines[from_line:]
         else:
             return []
+
+    def info(self) -> dict:
+        return {
+           'project_id': self.project.id,
+           'start_frame': self.start_frame,
+           'end_frame': self.end_frame,
+           'option_cycles': self.option_cycles,
+           'total_thread': self.total_thread
+        }
 
 
 class BlenderUtils:

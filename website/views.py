@@ -7,7 +7,8 @@ from django.conf import settings
 
 from blender.forms import FormUpload, PreRender
 from blender.models import Project
-from blender.render import BlenderRender, BlenderUtils
+from blender.render import BlenderUtils
+from blender import tasks
 
 
 def _get_project(request):
@@ -41,10 +42,10 @@ def pre_render(request):
 
     form = PreRender(request.POST or None, initial={'start_frame': 1, 'end_frame': total_frame})
     if form.is_valid():
-        br = BlenderRender(project)
         request.session['start_frame'] = form.cleaned_data['start_frame']
         request.session['end_frame'] = form.cleaned_data['end_frame']
-        br.run(
+        tasks.render_on_background.delay(
+            project_id=project.id,
             start_frame=form.cleaned_data['start_frame'],
             end_frame=form.cleaned_data['end_frame'],
             total_thread=form.cleaned_data['total_thread'],
