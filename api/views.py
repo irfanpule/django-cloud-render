@@ -19,12 +19,19 @@ def render_log(request, id):
         },
         "log": log,
         "progress": progress,
+        "status_frame": get_status_frame(
+            request.session["start_frame"],
+            request.session["end_frame"],
+            get_current_frame(log)
+        )
     })
 
 
-def get_percentage_progress(start_frame: int, end_frame: int, current_frame: int) -> float:
-    total = len(range(start_frame - 1, end_frame))
-    return current_frame / total * 100
+def get_status_frame(start_frame: int, end_frame: int, current_frame: int) -> float:
+    frames = [*range(start_frame, end_frame + 1)]
+    position = frames.index(current_frame)
+    total_frame = len(frames)
+    return f"Total rendered frames: {position + 1} out of {total_frame}"
 
 
 def get_current_frame(log: str):

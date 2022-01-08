@@ -30,6 +30,7 @@
         var log_content = [];
         var render_state = "";
         var progress = "1";
+        var status_frame = "";
 
         function updateView() {
             $("#render_status").html(render_state);
@@ -49,6 +50,7 @@
                 changeProgressBar(progress);
             }
 
+            $("#status_frame").text(status_frame);
             $("#log_process").text(log_html);
             $("#log_process").scrollTop($('#log_process')[0].scrollHeight);
         }
@@ -58,7 +60,8 @@
                 render_state = data.rendering.state;
                 log_content = log_content.concat(data.log);
                 last_line = last_line + data.log.length;
-                progress = data.progress
+                progress = data.progress;
+                status_frame = data.status_frame;
                 updateView();
                 if (render_state !== "success") {
                     setTimeout(listenProcess, 1500);
