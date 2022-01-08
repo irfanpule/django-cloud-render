@@ -15,6 +15,7 @@
                             <span id="percentage_progress">1%</span>
                         </div>
                     </div>
+                    <p id="status_frame">Total rendered frames: 0 out of 0</p>
                     <button class="btn btn-primary btn-sm" id="show_log_btn">Show Log</button>
                     <textarea class="form-control" rows="6" id="log_process" style="display: none;"></textarea>
                 </div>
@@ -42,9 +43,13 @@
                 console.log("berhasil nih")
                 $("#last_progress").text("");
             }
-            $("#render_progress").css({'width': progress + "%"});
+
+            console.log("progres persen:", progress);
+            if(progress !== null) {
+                changeProgressBar(progress);
+            }
+
             $("#log_process").text(log_html);
-            $("#percentage_progress").text(progress + "%");
             $("#log_process").scrollTop($('#log_process')[0].scrollHeight);
         }
 
@@ -54,13 +59,18 @@
                 log_content = log_content.concat(data.log);
                 last_line = last_line + data.log.length;
                 progress = data.progress
-                console.log(render_state, last_line, progress)
-                console.log(log_content)
                 updateView();
                 if (render_state !== "success") {
-                    setTimeout(listenProcess, 1000);
+                    setTimeout(listenProcess, 1500);
+                } else if (render_state == "success") {
+                    changeProgressBar(100);
                 }
             });
+        }
+
+        function changeProgressBar(progress) {
+            $("#render_progress").css({'width': progress + "%"});
+            $("#percentage_progress").text(progress + "%");
         }
 
         $("document").ready(function () {

@@ -18,6 +18,7 @@ class BlenderRender:
         self.end_frame = end_frame
         self.option_cycles = option_cycles
         self.total_thread = total_thread
+        self.output_dir = self.output_dir + "_" + self.project.name.replace(" ", "_").lower()
 
     def _prepare_log_dir(self):
         """
