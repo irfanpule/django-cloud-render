@@ -8,7 +8,7 @@ from blender.models import Project
 
 class BlenderRender:
     log_dir = settings.RENDER_LOG_DIR
-    output_dir = settings.BASE_DIR + "/output_render/frame_result"
+    output_dir = settings.OUTPUT_RENDER
 
     def __init__(self, project: Project, start_frame: int = 0, end_frame: int = 0,
                  option_cycles: str = "CPU", total_thread: int = 2) -> None:
@@ -18,7 +18,11 @@ class BlenderRender:
         self.end_frame = end_frame
         self.option_cycles = option_cycles
         self.total_thread = total_thread
-        self.output_dir = self.output_dir + "_" + self.project.name.replace(" ", "_").lower()
+        self.output_dir = self._generate_output_dir()
+
+    def _generate_output_dir(self):
+        output_project_dir = os.path.join(self.output_dir, self.project.slug)
+        return output_project_dir + "/" + self.project.slug
 
     def _prepare_log_dir(self):
         """

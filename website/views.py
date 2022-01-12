@@ -70,3 +70,13 @@ def process_render(request):
         'project': project,
     }
     return render(request, 'website/rendering.html', context)
+
+
+def result_render(request):
+    project = _get_project(request)
+    print(project.get_result_render())
+    context = {
+        'title': _("Result"),
+        'project': project,
+    }
+    return render(request, "website/result.html", context)

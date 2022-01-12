@@ -1,0 +1,24 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class=" col-md-12 col-lg-12 ">
+            <h1>{{ title }}</h1>
+            <div class="panel panel-info">
+                <div class="panel-heading">Detail Project</div>
+                <div class="panel-body">
+                    Project Id: <strong>{{ project.uuid }}</strong> <br>
+                    Project Name: <strong>{{ project.name }}</strong> <br>
+                    Owner: <strong>{{ project.user_name }}</strong> <br>
+                    File Name: <strong>{{ project.file.name }}</strong> <br>
+                </div>
+            </div>
+
+            {% for img in project.get_result_render %}
+            <div class="col-md-4" >
+                <img class="img img-responsive" src="{{ img }}">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

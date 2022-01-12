@@ -1,6 +1,10 @@
+import os.path
 import uuid
+import glob
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import slugify
+from django.conf import settings
 
 
 class Project(models.Model):
@@ -26,6 +30,17 @@ class Project(models.Model):
     @property
     def uuid(self):
         return str(self.id)
+
+    @property
+    def slug(self):
+        return slugify(self.name)
+
+    def get_result_render(self):
+        output_render = os.path.join(settings.OUTPUT_RENDER, self.slug)
+        realpath = []
+        for file in glob.glob(output_render + "/*"):
+            realpath.append(settings.MEDIA_HOST + os.path.relpath(file))
+        return realpath
 
 
 class RenderResult(models.Model):

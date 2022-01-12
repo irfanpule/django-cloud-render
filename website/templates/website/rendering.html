@@ -19,6 +19,9 @@
                     <button class="btn btn-primary btn-sm" id="show_log_btn">Show Log</button>
                     <textarea class="form-control" rows="6" id="log_process" style="display: none;"></textarea>
                 </div>
+                <div class="panel-footer">
+                    <a href="{% url 'website:result' %}" class="btn btn-success" id="btn_result" style="display: none;">Show Result</a>
+                </div>
             </div>
         </div>
     </div>
@@ -41,11 +44,9 @@
             }
 
             if(render_state == 'success'){
-                console.log("berhasil nih")
                 $("#last_progress").text("");
             }
 
-            console.log("progres persen:", progress);
             if(progress !== null) {
                 changeProgressBar(progress);
             }
@@ -64,9 +65,10 @@
                 status_frame = data.status_frame;
                 updateView();
                 if (render_state !== "success") {
-                    setTimeout(listenProcess, 1500);
+                    setTimeout(listenProcess, 1000);
                 } else if (render_state == "success") {
                     changeProgressBar(100);
+                    $("#btn_result").show();
                 }
             });
         }

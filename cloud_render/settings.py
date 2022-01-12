@@ -132,9 +132,11 @@ STATIC_ROOT = os.path.join(SETTINGS_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_HOST = "http://localhost:5555/"
 
 BLENDER_SCRIPTS = os.path.join(BASE_DIR, 'blender/scripts')
 RENDER_LOG_DIR = os.path.join(BASE_DIR, 'render_logs')
+OUTPUT_RENDER = os.path.join(MEDIA_ROOT, 'output_render')
 
 #CELERY
 CELERY_BROKER_URL = 'redis://localhost:6379'
