@@ -3,3 +3,4 @@ django-widget-tweaks==1.4.9
 celery==5.2.3
 django-celery-results==2.2.0
 redis==4.1.0
+djangorestframework==3.13.1
