@@ -15,8 +15,10 @@
             </div>
 
             {% for img in project.get_result_render %}
-            <div class="col-md-4" >
-                <img class="img img-responsive" src="{{ img }}">
+            <div class="col-md-6" >
+                <a href="#" class="thumbnail">
+                    <img class="img img-responsive" src="{{ img }}">
+                </a>
             </div>
             {% endfor %}
         </div>
