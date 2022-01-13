@@ -15,6 +15,7 @@ class Project(models.Model):
 
     RENDER_STATE = (
         (PREPARE, _("Prepare")),
+        (IN_PROGRESS, _("In Progress")),
         (SUCCESS, _("Success")),
         (FAILED, _("Failed")),
     )
@@ -41,11 +42,3 @@ class Project(models.Model):
         for file in glob.glob(output_render + "/*"):
             realpath.append(settings.MEDIA_HOST + os.path.relpath(file))
         return realpath
-
-
-class RenderResult(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="projects")
-
-    def __str__(self):
-        return str(self.id) + self.project.name
