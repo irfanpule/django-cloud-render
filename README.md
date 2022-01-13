@@ -1,6 +1,6 @@
 ## Blender Cloud Render
 
-This is a simple web app to render project blender on cloud. It's develop on django web framework.
+This is a simple web app to rendering blender project on cloud. It's develop use django web framework.
 
 ### Prerequisite
 * Install Redis
@@ -10,22 +10,34 @@ This is a simple web app to render project blender on cloud. It's develop on dja
 
 ### To do list
 - [x] Client Browser
-    - [x] Form upload project
-    - [x] Form prerender
+    - [x] Project Form
+      - Input project name, blender file and etc
+    - [x] Prerender Form 
+      - Show detail project
+      - Input start frame, end frame, option render, total thread etc
     - [x] Show render process
+      - Show log, time, remaining and progress bar
     - [x] Show result render
+      - Show all image
     - [ ] Download result render
+      - Download all image on .zip
 - [x] API
-    - [x] Upload file project
-    - [x] Get Information prerender
-    - [x] Render Process
-    - [x] Get log render process
-    - [ ] Get result render
-    - [ ] Download result render
+    - [x] Endpoint Add project
+      - POST: project name, blender file and etc
+    - [x] Endpoint Render
+      - GET: detail project
+      - POST: start frame, end frame, option render, total thread etc, then exec render job
+    - [x] Endpoint Log Process
+      - GET: detail log and state process
+    - [ ] Endpoint Result Render
+    - [ ] Endpoint Result Render
 - [ ] Client Blender Addon
-    - [ ] Form Configuration
-    - [ ] Form prerender
+    - [ ] Configuration Form
+      - Input hostname or ip server
+    - [ ] Prerender Form
+      - Input start frame, end frame, option render, total thread etc
     - [ ] Render process
+      - Show state process and open browser when finish render to get result
 - [x] Other features
     - [x] automatic check max thread
     - [ ] automatic check option cycles `CPU+GPU` already
