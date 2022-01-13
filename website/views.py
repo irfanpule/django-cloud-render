@@ -74,7 +74,6 @@ def process_render(request):
 
 def result_render(request):
     project = _get_project(request)
-    print(project.get_result_render())
     context = {
         'title': _("Result"),
         'project': project,
