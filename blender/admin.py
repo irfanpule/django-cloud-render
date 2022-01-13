@@ -1,6 +1,7 @@
 from django.contrib import admin
-from blender.models import Project, RenderResult
+from blender.models import Project
 
 
-admin.site.register(Project)
-admin.site.register(RenderResult)
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
