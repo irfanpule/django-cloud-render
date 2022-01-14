@@ -7,8 +7,8 @@ from django.conf import settings
 
 from blender.forms import FormUpload, PreRender
 from blender.models import Project
-from blender.render import BlenderUtils
 from blender import tasks
+from blender.utils import get_total_frames
 
 
 def _get_project(request):
@@ -36,9 +36,7 @@ def index(request):
 
 def pre_render(request):
     project = _get_project(request)
-    bu = BlenderUtils(filepath=project.file.path)
-    script_path = os.path.join(settings.BLENDER_SCRIPTS, "show_total_frame.py")
-    total_frame = bu.get_total_frames(script_path)
+    total_frame = get_total_frames(filepath=project.file.path)
 
     form = PreRender(request.POST or None, initial={'start_frame': 1, 'end_frame': total_frame})
     if form.is_valid():
