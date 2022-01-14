@@ -1,6 +1,7 @@
 import subprocess
 import shlex
 import os
+import glob
 
 from django.conf import settings
 from blender.models import Project
@@ -73,6 +74,17 @@ class BlenderRender:
             self.project.state = Project.FAILED
             self.project.save()
 
+    def _remove_result_render(self):
+        """
+        this function is used to remove all the old renders.
+        :return:
+        """
+        for path in glob.glob(self.output_dir + "/*"):
+            try:
+                os.remove(path)
+            except Exception as e:
+                print(e)
+
     def run(self):
         """
         to start process rendering
@@ -83,6 +95,7 @@ class BlenderRender:
         :return:
         """
         self._prepare_log_dir()
+        self._remove_result_render()
         self.project.state = Project.IN_PROGRESS
         self.project.save()
 
