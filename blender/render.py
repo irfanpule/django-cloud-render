@@ -88,10 +88,6 @@ class BlenderRender:
     def run(self):
         """
         to start process rendering
-        :param start_frame: number of start frame
-        :param end_frame: number of end frame
-        :param option_cycles: option cycles rendering
-        :param total_thread: number of used thread
         :return:
         """
         self._prepare_log_dir()
