@@ -2,13 +2,11 @@ import os
 
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 
 from blender.models import Project
 from blender.render import BlenderRender
-from blender.utils import get_percentage_progress, get_current_frame, get_status_frame
+from blender.utils import get_percentage_progress, get_current_frame, get_status_frame, get_total_frames
 from api.serializers import ProjectSerializer, RenderSerializer
-from blender.render import BlenderUtils
 from blender import tasks
 
 from rest_framework.response import Response
@@ -80,9 +78,7 @@ class RenderAPIView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def _get_total_frame(self, project):
-        bu = BlenderUtils(filepath=project.file.path)
-        script_path = os.path.join(settings.BLENDER_SCRIPTS, "show_total_frame.py")
-        total_frame = bu.get_total_frames(script_path)
+        total_frame = get_total_frames(filepath=project.file.path)
         return total_frame
 
 

@@ -30,7 +30,7 @@ This is a simple web app to rendering blender project on cloud. It's develop use
     - [x] Endpoint Log Process
       - GET: detail log and state process
     - [ ] Endpoint Result Render
-    - [ ] Endpoint Result Render
+    - [ ] Endpoint Download Render
 - [ ] Client Blender Addon
     - [ ] Configuration Form
       - Input hostname or ip server

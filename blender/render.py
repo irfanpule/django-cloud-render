@@ -115,25 +115,3 @@ class BlenderRender:
            'option_cycles': self.option_cycles,
            'total_thread': self.total_thread
         }
-
-
-class BlenderUtils:
-
-    def __init__(self, filepath: str) -> None:
-        self.filepath = filepath
-
-    def get_total_frames(self, script_path: str) -> int:
-        """
-        to get total frame from blender command extended script show_total_frame.py
-        :param script_path: path file from
-        :return: number of total frame
-        """
-        args = shlex.split(f"blender -b {self.filepath} --python {script_path}")
-        output = subprocess.run(args, capture_output=True)
-        output_str = output.stdout.decode("utf-8")
-
-        for o in output_str.splitlines():
-            parsing = o.split(":")
-            if parsing[0].lower() == "end frame":
-                return int(parsing[1])
-        raise Exception("Can't get total frame. Please check your file")
