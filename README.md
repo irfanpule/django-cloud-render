@@ -19,7 +19,7 @@ This is a simple web app to rendering blender project on cloud. It's develop use
       - Show log, time, remaining and progress bar
     - [x] Show result render
       - Show all image
-    - [ ] Download result render
+    - [x] Download result render
       - Download all image on .zip
 - [x] API
     - [x] Endpoint Add project
