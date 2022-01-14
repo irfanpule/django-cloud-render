@@ -11,16 +11,21 @@
                     Project Name: <strong>{{ project.name }}</strong> <br>
                     Owner: <strong>{{ project.user_name }}</strong> <br>
                     File Name: <strong>{{ project.file.name }}</strong> <br>
+                    Total Images: <strong>{{ project.get_result_render|length }}</strong>
+                </div>
+                <div class="panel-footer">
+                    <a href="{% url 'website:download_result' %}" class="btn btn-success center-block">Download All</a>
                 </div>
             </div>
-
-            {% for img in project.get_result_render %}
-            <div class="col-md-6" >
-                <a href="#" class="thumbnail">
-                    <img class="img img-responsive" src="{{ img }}">
-                </a>
-            </div>
-            {% endfor %}
         </div>
+
+
+        {% for img in project.get_result_render %}
+        <div class="col-md-6" >
+            <a href="#" class="thumbnail">
+                <img class="img img-responsive" src="{{ img }}">
+            </a>
+        </div>
+        {% endfor %}
     </div>
 {% endblock %}

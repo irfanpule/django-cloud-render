@@ -1,9 +1,7 @@
-import os
-
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
+from django.http import HttpResponse
 
 from blender.forms import FormUpload, PreRender
 from blender.models import Project
@@ -77,3 +75,11 @@ def result_render(request):
         'project': project,
     }
     return render(request, "website/result.html", context)
+
+
+def download_result(request):
+    project = _get_project(request)
+    zip_buffer = project.export_result_to_zip_bytes_io()
+    response = HttpResponse(zip_buffer.getvalue(), content_type='application/x-zip-compressed')
+    response['Content-Disposition'] = 'attachment; filename=%s' % f'{project.slug}.zip'
+    return response

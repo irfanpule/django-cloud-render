@@ -1,6 +1,9 @@
-import os.path
+import os
 import uuid
 import glob
+import zipfile
+
+from io import BytesIO
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
@@ -29,16 +32,27 @@ class Project(models.Model):
         return str(self.id)
 
     @property
-    def uuid(self):
+    def uuid(self) -> str:
         return str(self.id)
 
     @property
-    def slug(self):
+    def slug(self) -> str:
         return slugify(self.name)
 
-    def get_result_render(self):
+    def get_result_render(self, use_media_host=True) -> [str]:
         output_render = os.path.join(settings.OUTPUT_RENDER, self.slug)
-        realpath = []
-        for file in glob.glob(output_render + "/*"):
-            realpath.append(settings.MEDIA_HOST + os.path.relpath(file))
-        return realpath
+        all_file = glob.glob(output_render + "/*")
+        if use_media_host:
+            realpath = []
+            for file in all_file:
+                realpath.append(settings.MEDIA_HOST + os.path.relpath(file))
+            return realpath
+        return all_file
+
+    def export_result_to_zip_bytes_io(self) -> BytesIO:
+        zip_buffer = BytesIO()
+        with zipfile.ZipFile(zip_buffer, "w") as zip:
+            for path in self.get_result_render(use_media_host=False):
+                filename = os.path.basename(path)
+                zip.write(path, filename)
+        return zip_buffer
