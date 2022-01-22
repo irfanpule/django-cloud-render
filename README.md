@@ -31,8 +31,8 @@ This is a simple web app to rendering blender project on cloud. It's develop use
       - GET: detail log and state process
     - [ ] Endpoint Result Render
     - [ ] Endpoint Download Render
-- [ ] Client Blender Addon
-    - [ ] Configuration Form
+- [x] Client Blender Addon
+    - [x] Configuration Form
       - Input hostname or ip server
     - [ ] Prerender Form
       - Input start frame, end frame, option render, total thread etc
@@ -47,3 +47,7 @@ This is a simple web app to rendering blender project on cloud. It's develop use
     - [x] Test render option cycles `CPU`
     - [ ] Test render option cycles `CPU+GPU`
     - [ ] Test on server using GPU or not
+- [x] Project Management
+    - [x] Create project
+    - [ ] Manage all flow project process use user auth
+      - website and API
