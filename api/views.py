@@ -38,14 +38,19 @@ class UploadFileAPIView(APIView):
 
     def post(self, request):
         serializer = ProjectSerializer(data=request.data)
+        response = {}
         if serializer.is_valid():
             project = serializer.save()
             data = serializer.data.copy()
             data["project_uuid"] = project.uuid
+            response["data"] = data
+            response["message"] = "Success Upload"
             request.session["project_uuid"] = project.uuid
-            return Response(data, status=status.HTTP_200_OK)
+            return Response(response, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            response["message"] = "There's an error"
+            response["errors"] = serializer.errors
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RenderAPIView(APIView):
@@ -56,12 +61,16 @@ class RenderAPIView(APIView):
         data = serializer.data.copy()
         data['total_frame'] = self._get_total_frame(project)
         data['max_thread'] = os.cpu_count()
+        response = {}
+        response['data'] = data
+        response['message'] = "Success get detail spec server"
         return Response(data)
 
     def post(self, request):
         project = _get_project(request)
         total_frame = self._get_total_frame(project)
         serializer = RenderSerializer(data=request.data, total_frame=total_frame)
+        response = {}
         if serializer.is_valid():
             request.session['start_frame'] = serializer.validated_data['start_frame']
             request.session['end_frame'] = serializer.validated_data['end_frame']
@@ -75,7 +84,9 @@ class RenderAPIView(APIView):
             )
             return Response({"message": f"Project {project.id} Rendered"}, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            response["message"] = "There's an error"
+            response["errors"] = serializer.errors
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
     def _get_total_frame(self, project):
         total_frame = get_total_frames(filepath=project.file.path)
