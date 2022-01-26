@@ -9,7 +9,7 @@
                 <div class="panel-body">
                     Project Id: <strong>{{ project.uuid }}</strong> <br>
                     Project Name: <strong>{{ project.name }}</strong> <br>
-                    Owner: <strong>{{ project.user_name }}</strong> <br>
+                    Owner: <strong>{{ project.user.username }}</strong> <br>
                     File Name: <strong>{{ project.file.name }}</strong> <br>
                     Total Images: <strong>{{ project.get_result_render|length }}</strong>
                 </div>

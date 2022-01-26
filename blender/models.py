@@ -25,8 +25,8 @@ class Project(models.Model):
     )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
     name = models.CharField(_("Project Name"), max_length=255)
+    description = models.CharField(_("Description"), max_length=255, blank=True, null=True)
     file = models.FileField(_("Blender File"), upload_to="uploads/")
-    user_name = models.CharField(_("Your Name"), max_length=255, blank=True, null=True, help_text=_("optional"))
     state = models.CharField(_("Render State"), choices=RENDER_STATE, max_length=255, default=PREPARE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
