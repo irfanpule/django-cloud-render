@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -10,20 +9,13 @@ from blender import tasks
 from blender.utils import get_total_frames
 
 
-def _get_project(request):
-    project = Project.objects.filter(id=request.session.get("project_uuid", None)).first()
-    if not project:
-        messages.warning(request, _('You have to upload your blender project first'))
-        return redirect('website:index')
-    return project
-
-
 @login_required
 def index(request):
     form = FormUpload(request.POST or None, files=request.FILES)
     if form.is_valid():
-        project = form.save()
-        request.session["project_uuid"] = project.uuid
+        project = form.save(commit=False)
+        project.user = request.user
+        project.save()
         return redirect('website:pre_render', project.uuid)
 
     context = {
