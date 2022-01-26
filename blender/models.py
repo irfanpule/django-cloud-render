@@ -8,6 +8,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from django.conf import settings
+from django.contrib.auth.models import User
 
 
 class Project(models.Model):
@@ -27,6 +28,7 @@ class Project(models.Model):
     file = models.FileField(_("Blender File"), upload_to="uploads/")
     user_name = models.CharField(_("Your Name"), max_length=255, blank=True, null=True, help_text=_("optional"))
     state = models.CharField(_("Render State"), choices=RENDER_STATE, max_length=255, default=PREPARE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)
