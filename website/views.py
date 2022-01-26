@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from blender.forms import FormUpload, PreRender
 from blender.models import Project
@@ -17,6 +18,7 @@ def _get_project(request):
     return project
 
 
+@login_required
 def index(request):
     form = FormUpload(request.POST or None, files=request.FILES)
     if form.is_valid():

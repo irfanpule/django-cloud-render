@@ -135,6 +135,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 MEDIA_HOST = "http://localhost:5555/"
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 BLENDER_SCRIPTS = os.path.join(BASE_DIR, 'blender/scripts')
 RENDER_LOG_DIR = os.path.join(BASE_DIR, 'render_logs')
 OUTPUT_RENDER = os.path.join(MEDIA_ROOT, 'output_render')
