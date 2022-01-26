@@ -14,7 +14,7 @@
                     Total Images: <strong>{{ project.get_result_render|length }}</strong>
                 </div>
                 <div class="panel-footer">
-                    <a href="{% url 'website:download_result' %}" class="btn btn-success center-block">Download All</a>
+                    <a href="{% url 'website:download_result' project.uuid %}" class="btn btn-success center-block">Download All</a>
                 </div>
             </div>
         </div>

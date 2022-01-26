@@ -20,7 +20,7 @@
                     <textarea class="form-control" rows="6" id="log_process" style="display: none;"></textarea>
                 </div>
                 <div class="panel-footer">
-                    <a href="{% url 'website:result' %}" class="btn btn-success" id="btn_result" style="display: none;">Show Result</a>
+                    <a href="{% url 'website:result' project.uuid %}" class="btn btn-success" id="btn_result" style="display: none;">Show Result</a>
                 </div>
             </div>
         </div>

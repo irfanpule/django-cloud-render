@@ -9,7 +9,7 @@ class FormUpload(forms.ModelForm):
 
     class Meta:
         model = Project
-        exclude = ('state',)
+        exclude = ('state', 'user')
 
 
 class PreRender(forms.Form):

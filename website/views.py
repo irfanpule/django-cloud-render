@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
@@ -24,7 +24,7 @@ def index(request):
     if form.is_valid():
         project = form.save()
         request.session["project_uuid"] = project.uuid
-        return redirect('website:pre_render')
+        return redirect('website:pre_render', project.uuid)
 
     context = {
         'title': _('Home'),
@@ -34,8 +34,9 @@ def index(request):
     return render(request, 'website/index.html', context)
 
 
-def pre_render(request):
-    project = _get_project(request)
+@login_required
+def pre_render(request, id):
+    project = get_object_or_404(Project, id=id)
     total_frame = get_total_frames(filepath=project.file.path)
 
     form = PreRender(request.POST or None, initial={'start_frame': 1, 'end_frame': total_frame})
@@ -49,7 +50,7 @@ def pre_render(request):
             total_thread=form.cleaned_data['total_thread'],
             option_cycles=form.cleaned_data['option_cycles']
         )
-        return redirect("website:rendering")
+        return redirect("website:rendering", project.uuid)
 
     context = {
         'title': _('Pre Render'),
@@ -61,8 +62,9 @@ def pre_render(request):
     return render(request, 'website/pre-render.html', context)
 
 
-def process_render(request):
-    project = _get_project(request)
+@login_required
+def process_render(request, id):
+    project = get_object_or_404(Project, id=id)
     context = {
         'title': _('Rendering'),
         'project': project,
@@ -70,8 +72,9 @@ def process_render(request):
     return render(request, 'website/rendering.html', context)
 
 
-def result_render(request):
-    project = _get_project(request)
+@login_required
+def result_render(request, id):
+    project = get_object_or_404(Project, id=id)
     context = {
         'title': _("Result"),
         'project': project,
@@ -79,8 +82,9 @@ def result_render(request):
     return render(request, "website/result.html", context)
 
 
-def download_result(request):
-    project = _get_project(request)
+@login_required
+def download_result(request, id):
+    project = get_object_or_404(Project, id=id)
     zip_buffer = project.export_result_to_zip_bytes_io()
     response = HttpResponse(zip_buffer.getvalue(), content_type='application/x-zip-compressed')
     response['Content-Disposition'] = 'attachment; filename=%s' % f'{project.slug}.zip'
