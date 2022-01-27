@@ -1,0 +1,29 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class=" col-md-12 col-lg-12 ">
+            <h1>{{ title }}</h1> <a href="{% url 'website:add_project' %}" class="btn btn-success" style="margin-bottom: 10px;">Add Project</a>
+
+            <ul class="list-group">
+                {% for project in projects %}
+                    <li class="list-group-item">
+                        <div class="btn-group right">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                Action <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'website:pre_render' project.id %}">Render</a></li>
+                                <li><a href="{% url 'website:result' project.id %}">Show Result</a></li>
+                                <li><a href="{% url 'website:download_result' project.id %}">Download Result</a></li>
+                            </ul>
+                        </div>
+                        {{ project.name }} / {{ project.uuid }}
+                    </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+{% endblock %}

@@ -11,15 +11,24 @@ from blender.utils import get_total_frames
 
 @login_required
 def index(request):
-    form = FormUpload(request.POST or None, files=request.FILES)
+    context = {
+        'title': _('Your Project'),
+        'projects': Project.objects.filter(user=request.user)
+    }
+    return render(request, 'website/list-project.html', context)
+
+
+@login_required
+def add_project(request):
+    form = FormUpload(request.POST or None, files=request.FILES or None)
     if form.is_valid():
         project = form.save(commit=False)
         project.user = request.user
         project.save()
-        return redirect('website:pre_render', project.uuid)
+        return redirect('website:index')
 
     context = {
-        'title': _('Home'),
+        'title': _('Add Project'),
         'form': form,
         'title_submit': _('Upload')
     }
