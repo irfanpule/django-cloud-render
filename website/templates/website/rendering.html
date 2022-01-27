@@ -57,7 +57,8 @@
         }
 
         function listenProcess() {
-            $.get("{% url 'api:render_log' project.id %}?from_line=" + last_line, function (data) {
+            $.get("{% url 'api:render_log' project.id %}?from_line=" + last_line, function (response) {
+                const data = response.data;
                 render_state = data.rendering.state;
                 log_content = log_content.concat(data.log);
                 last_line = last_line + data.log.length;

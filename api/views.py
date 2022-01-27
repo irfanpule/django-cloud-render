@@ -13,61 +13,46 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListAPIView, CreateAPIView
 
 
-def _get_project(request):
-    project = Project.objects.filter(id=request.session.get("project_uuid", None)).first()
-    if not project:
-        return Response({
-            "message": _('You have to upload your blender project first')
-        }, status=status.HTTP_400_BAD_REQUEST)
-    return project
+class GetProjectsAPIView(ListAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = ProjectSerializer
+
+    def get_queryset(self):
+        return Project.objects.filter(user=self.request.user)
 
 
-class GetSessionAPIView(APIView):
-
-    def get(self, request):
-        return Response({
-            "message": "success",
-            "project_uuid": request.session.get("project_uuid")
-        })
-
-
-class UploadFileAPIView(APIView):
+class UploadFileAPIView(CreateAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
+    serializer_class = ProjectSerializer
 
-    def post(self, request):
-        serializer = ProjectSerializer(data=request.data)
-        response = {}
-        if serializer.is_valid():
-            project = serializer.save()
-            data = serializer.data.copy()
-            data["project_uuid"] = project.uuid
-            response["data"] = data
-            response["message"] = "Success Upload"
-            request.session["project_uuid"] = project.uuid
-            return Response(response, status=status.HTTP_200_OK)
-        else:
-            response["message"] = "There's an error"
-            response["errors"] = serializer.errors
-            return Response(response, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, *args, **kwargs):
+        request.data['user'] = request.user.pk
+        return self.create(request, *args, **kwargs)
 
 
 class RenderAPIView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        project = _get_project(request)
+    def get(self, request, id):
+        project = get_object_or_404(Project, id=id)
         serializer = ProjectSerializer(project)
         data = serializer.data.copy()
         data['total_frame'] = self._get_total_frame(project)
         data['max_thread'] = os.cpu_count()
-        response = {}
-        response['data'] = data
-        response['message'] = "Success get detail spec server"
-        return Response(data)
+        response = {'data': data, 'message': _("Success get detail spec server")}
+        return Response(response)
 
-    def post(self, request):
-        project = _get_project(request)
+    def post(self, request, id):
+        project = get_object_or_404(Project, id=id)
         total_frame = self._get_total_frame(project)
         serializer = RenderSerializer(data=request.data, total_frame=total_frame)
         response = {}
@@ -82,7 +67,8 @@ class RenderAPIView(APIView):
                 total_thread=serializer.validated_data['total_thread'],
                 option_cycles=serializer.validated_data['option_cycles']
             )
-            return Response({"message": f"Project {project.id} Rendered"}, status=status.HTTP_200_OK)
+            data = serializer.data
+            return Response({"data": data, "message": _(f"Project {project.id} Rendered")}, status=status.HTTP_200_OK)
         else:
             response["message"] = "There's an error"
             response["errors"] = serializer.errors
@@ -102,7 +88,7 @@ class GetRenderLog(APIView):
         log = br.get_log(int(from_line))
 
         progress = get_percentage_progress(log)
-        return Response({
+        data = {
             "rendering": {
                 "id": br.project.uuid,
                 "state": br.project.state
@@ -114,4 +100,8 @@ class GetRenderLog(APIView):
                 request.session["end_frame"],
                 get_current_frame(log)
             )
+        }
+        return Response({
+            "data": data,
+            "message": _("succes get progress data")
         })
