@@ -51,6 +51,12 @@ class Project(models.Model):
             return realpath
         return all_file
 
+    def is_finish_render(self) -> bool:
+        result = self.get_result_render()
+        if result and self.state == self.SUCCESS:
+            return True
+        return False
+
     def export_result_to_zip_bytes_io(self) -> BytesIO:
         zip_buffer = BytesIO()
         with zipfile.ZipFile(zip_buffer, "w") as zip:
