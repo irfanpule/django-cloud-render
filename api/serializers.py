@@ -11,6 +11,16 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ['id', 'name', 'file', 'user']
 
+    def create(self, validated_data):
+        project = Project.objects.filter(name=validated_data["name"]).first()
+        if project:
+            project.name = validated_data['name']
+            project.file = validated_data['file']
+            project.save()
+            return project
+        else:
+            return super().create(validated_data)
+
 
 class RenderSerializer(serializers.Serializer):
     start_frame = serializers.IntegerField()
