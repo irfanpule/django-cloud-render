@@ -15,14 +15,19 @@
                                     Action <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{% url 'website:pre_render' project.id %}">Render</a></li>
+                                    {% if project.state == 'in_progress' %}
+                                        <li><a href="{% url 'website:rendering' project.id %}">Render</a></li>
+                                    {% else %}
+                                        <li><a href="{% url 'website:pre_render' project.id %}">Render</a></li>
+                                    {% endif %}
+
                                     {% if project.is_finish_render %}
                                         <li><a href="{% url 'website:result' project.id %}">Show Result</a></li>
                                         <li><a href="{% url 'website:download_result' project.id %}">Download Result</a></li>
                                     {% endif %}
                                 </ul>
                             </div>
-                            {{ project.name }} / {{ project.uuid }}
+                            {{ project.name }} / {{ project.uuid }} {{ project.get_state_label|safe }}
                         </li>
                     {% endfor %}
                 {% else %}

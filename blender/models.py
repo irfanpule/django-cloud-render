@@ -41,6 +41,18 @@ class Project(models.Model):
     def slug(self) -> str:
         return slugify(self.name)
 
+    def get_state_label(self):
+        if self.state == self.SUCCESS:
+            label = "label label-success"
+        elif self.state == self.FAILED:
+            label = "label label-danger"
+        elif self.state == self.IN_PROGRESS:
+            label = "label label-info"
+        else:
+            label = "label label-warning"
+        state = self.get_state_display()
+        return f'<span class="{label}">{ state }</span>'
+
     def get_result_render(self, use_media_host=True) -> [str]:
         output_render = os.path.join(settings.OUTPUT_RENDER, self.slug)
         all_file = glob.glob(output_render + "/*")
