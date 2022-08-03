@@ -31,7 +31,7 @@ This is a simple web app to rendering blender project on cloud. It's develop use
       - GET: detail log and state process
     - [ ] Endpoint Result Render
     - [ ] Endpoint Download Render
-- [x] Client Blender Addon
+- [x] Client Blender Addon. You can see [here](https://github.com/irfanpule/django-cloud-render-addon-blender)
     - [x] Configuration Form
       - Input hostname or ip server
     - [ ] Prerender Form
