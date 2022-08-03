@@ -51,3 +51,11 @@ This is a simple web app to rendering blender project on cloud. It's develop use
     - [x] Create project
     - [ ] Manage all flow project process use user auth
       - website and API
+
+
+### How to install
+- clone project
+- setup env
+- install all dependency from `requirements.txt`
+- run project `python manage.py runserver`
+- run celery `celery -A cloud_render worker`
